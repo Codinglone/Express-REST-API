@@ -31,9 +31,9 @@ const getUserById = (request, response) => {
     })
 }
 
-const createUser = (request, response) => {
+const createUser = async(request, response) => {
     const { password, email } = request.body;
-    const hashedPassword = bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     pool.query('INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *', [email, hashedPassword], (error, results) => {
         if(error){
@@ -44,11 +44,12 @@ const createUser = (request, response) => {
     })
 }
 
-const updateUser = (request, response) => {
+const updateUser = async(request, response) => {
     const id = parseInt(request.params.id);
     const { email, password } = request.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    pool.query('UPDATE users SET email=$1, password=$2 WHERE id = $3', [email, password, id], (error, results) => {
+    pool.query('UPDATE users SET email=$1, password=$2 WHERE id = $3', [email, hashedPassword, id], (error, results) => {
         if(error){
             throw error;
         }
