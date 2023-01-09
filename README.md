@@ -3,5 +3,5 @@
 ##Follow the following steps to run an app:
 
 ###1.npm install 
-###2.node index.js
+###2.npm run dev
 ###3.Happy new year
