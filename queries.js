@@ -77,14 +77,9 @@ const handleLogin = async(request, response) => {
     const foundUser = pool.query(`SELECT * FROM users WHERE email=${email}`);
     if(!foundUser) return response.status(401); //unauthorized
 
-    try {
-        // encrypt the password
-        const hashedPwd = await bcrypt.hash(pwd, 10);
-
-
-    } catch (error) {
-        
-    }
+    // evaluate password
+    const match = await bcrypt.compare(password, foundUser.password);
+    
 }
 
 
