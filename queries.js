@@ -70,6 +70,23 @@ const deleteUser = (request, response) => {
     })
 }
 
+const handleLogin = async(request, response) => {
+    const { email, password } = request.body;
+    if( !email || !password ) return response.status(400).json({  'message': 'Username and password are required'  });
+
+    const foundUser = pool.query(`SELECT * FROM users WHERE email=${email}`);
+    if(!foundUser) return response.status(401); //unauthorized
+
+    try {
+        // encrypt the password
+        const hashedPwd = await bcrypt.hash(pwd, 10);
+
+
+    } catch (error) {
+        
+    }
+}
+
 
 module.exports = {
     getUsers,
